@@ -359,6 +359,11 @@ class BigBlueButtonApiController < ApplicationController
     render(:delete_recordings)
   end
 
+  def recordings_disabled
+    logger.info("The recordings feature have been disabled")
+    render(xml: no_recordings_response)
+  end
+
   private
 
   # Filter out unneeded params when passing through to join and create calls
@@ -384,6 +389,17 @@ class BigBlueButtonApiController < ApplicationController
       xml.response do
         xml.returncode('SUCCESS')
         xml.running('false')
+      end
+    end
+  end
+
+  # No recordings response if recording is disabled
+  def no_recordings_response
+    Nokogiri::XML::Builder.new do |xml|
+      xml.response do
+        xml.returncode('SUCCESS')
+        xml.messageKey('noRecordings')
+        xml.message('There are no recordings for the meeting(s).')
       end
     end
   end

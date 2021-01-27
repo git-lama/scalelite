@@ -11,11 +11,18 @@ Rails.application.routes.draw do
     match 'create', to: 'bigbluebutton_api#create', via: [:get, :post]
     get 'end', to: 'bigbluebutton_api#end'
     get 'join', to: 'bigbluebutton_api#join'
-    get 'getRecordings', to: 'bigbluebutton_api#get_recordings', as: :get_recordings
-    get 'publishRecordings', to: 'bigbluebutton_api#publish_recordings', as: :publish_recordings
-    get 'updateRecordings', to: 'bigbluebutton_api#update_recordings', as: :update_recordings
-    get 'deleteRecordings', to: 'bigbluebutton_api#delete_recordings', as: :delete_recordings
+
+    constraints(RecordingConstraint.new) do
+      get 'getRecordings', to: 'bigbluebutton_api#get_recordings', as: :get_recordings
+      get 'publishRecordings', to: 'bigbluebutton_api#publish_recordings', as: :publish_recordings
+      get 'updateRecordings', to: 'bigbluebutton_api#update_recordings', as: :update_recordings
+      get 'deleteRecordings', to: 'bigbluebutton_api#delete_recordings', as: :delete_recordings
+    end
+
+    match '*Recordings', to: 'bigbluebutton_api#recordings_disabled', via: :all
   end
+
+  get 'dashboard', to: 'operator_dashboards#show'
 
   get 'health_check', to: 'health_check#all'
 
