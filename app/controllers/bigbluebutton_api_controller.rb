@@ -153,7 +153,7 @@ class BigBlueButtonApiController < ApplicationController
     params[:moderatorPW] = moderator_pwd
     meeting = Meeting.find_or_create_with_server(params[:meetingID], server, moderator_pwd)
 
-    # Update with old server if meeting already existed in database
+    # Update with old server if meeting already existed in database test
     server = meeting.server
 
     logger.debug("Incrementing server #{server.id} load by 1")
