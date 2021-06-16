@@ -117,6 +117,7 @@ namespace :poll do
         server = meeting.server
         Rails.logger.debug("Polling Meeting id=#{meeting.id} on Server id=#{server.id}")
         get_post_req(encode_bbb_uri('getMeetingInfo', server.url, server.secret, meetingID: meeting.id))
+        raise ConcurrentModificationError.new('Servers list concurrently modified', server)
       rescue BBBErrors::BBBError => e
         unless e.message_key == 'notFound'
           Rails.logger.warn("Unexpected BigBlueButton error polling Meeting id=#{meeting.id} on Server id=#{server.id}: #{e}")
@@ -128,9 +129,11 @@ namespace :poll do
           Rails.logger.info("Meeting id=#{meeting.id} on Server id=#{server.id} has ended")
         rescue ApplicationRedisRecord::RecordNotSaved => e
           Rails.logger.warn("Unable to destroy meeting id=#{meeting.id}: #{e}")
+          raise ConcurrentModificationError.new('Servers list concurrently modified', server)
         end
       rescue StandardError => e
         Rails.logger.warn("Failed to check meeting id=#{meeting.id} status: #{e}")
+        raise ConcurrentModificationError.new('Servers list concurrently modified', server)
       end
     end
     Concurrent::Promises.zip_futures_on(pool, *tasks).wait!
