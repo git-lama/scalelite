@@ -70,7 +70,7 @@ namespace :poll do
         end
 
         server.state = 'disabled' if server.cordoned? && server.load.to_f.zero?
-
+        raise ConcurrentModificationError.new('Servers list concurrently modified', server)
       rescue StandardError => e
         Rails.logger.warn("Failed to get server id=#{server.id} status: #{e}")
 
@@ -99,7 +99,7 @@ namespace :poll do
         end
       end
     end
-    Concurrent::Promises.zip_futures_on(pool, *tasks)
+    Concurrent::Promises.zip_futures_on(pool, *tasks).wait!
     pool.shutdown
     pool.wait_for_termination(5) || pool.kill
   end
@@ -131,7 +131,7 @@ namespace :poll do
         Rails.logger.warn("Failed to check meeting id=#{meeting.id} status: #{e}")
       end
     end
-    Concurrent::Promises.zip_futures_on(pool, *tasks)
+    Concurrent::Promises.zip_futures_on(pool, *tasks).wait!
 
     pool.shutdown
     pool.wait_for_termination(5) || pool.kill
