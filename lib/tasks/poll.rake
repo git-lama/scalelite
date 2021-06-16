@@ -37,6 +37,7 @@ namespace :poll do
         Rails.logger.debug("Polling Server id=#{server.id}")
         resp = get_post_req(encode_bbb_uri('getMeetings', server.url, server.secret))
         meetings = resp.xpath('/response/meetings/meeting')
+
         total_attendees = 0
         load_min_user_count = Rails.configuration.x.load_min_user_count
         x_minutes_ago = Rails.configuration.x.load_join_buffer_time.ago
@@ -69,12 +70,13 @@ namespace :poll do
         end
 
         server.state = 'disabled' if server.cordoned? && server.load.to_f.zero?
-        raise ConcurrentModificationError.new('Servers list concurrently modified', server)
+
       rescue StandardError => e
         Rails.logger.warn("Failed to get server id=#{server.id} status: #{e}")
 
         # Reset healthy counter so that only consecutive healthy calls are counted
         server.reset_healthy_counter
+
         next unless server.online # Only check healthiness if server is currently online
 
         # Only take the server offline if the number of failed requests is >= the acceptable threshold
@@ -85,7 +87,6 @@ namespace :poll do
         server.reset_counters
         server.load = nil
         server.online = false
-        raise ConcurrentModificationError.new('Servers list concurrently modified', server)
       ensure
         begin
           server.save!
@@ -95,11 +96,10 @@ namespace :poll do
           )
         rescue ApplicationRedisRecord::RecordNotSaved => e
           Rails.logger.warn("Unable to update Server id=#{server.id}: #{e}")
-          raise ConcurrentModificationError.new('Servers list concurrently modified', server)
         end
       end
     end
-    Concurrent::Promises.zip_futures_on(pool, *tasks).wait!
+    Concurrent::Promises.zip_futures_on(pool, *tasks)
     pool.shutdown
     pool.wait_for_termination(5) || pool.kill
   end
@@ -131,7 +131,7 @@ namespace :poll do
         Rails.logger.warn("Failed to check meeting id=#{meeting.id} status: #{e}")
       end
     end
-    Concurrent::Promises.zip_futures_on(pool, *tasks).wait!
+    Concurrent::Promises.zip_futures_on(pool, *tasks)
 
     pool.shutdown
     pool.wait_for_termination(5) || pool.kill
