@@ -87,6 +87,7 @@ namespace :poll do
         server.reset_counters
         server.load = nil
         server.online = false
+        raise ConcurrentModificationError.new('Servers list concurrently modified', server)
       ensure
         begin
           server.save!
@@ -96,6 +97,7 @@ namespace :poll do
           )
         rescue ApplicationRedisRecord::RecordNotSaved => e
           Rails.logger.warn("Unable to update Server id=#{server.id}: #{e}")
+          raise ConcurrentModificationError.new('Servers list concurrently modified', server)
         end
       end
     end
