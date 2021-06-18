@@ -114,4 +114,16 @@ class Recording < ApplicationRecord
       retry
     end
   end
+
+  private
+
+  def destroy!(hard: false)
+    if hard
+      self.destroy!
+    else
+      self.metadata.destroy!
+      self.playback_formats.destroy!
+      self.callback_data.destroy!
+    end
+  end
 end

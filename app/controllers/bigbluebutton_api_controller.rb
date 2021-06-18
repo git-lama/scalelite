@@ -382,7 +382,7 @@ class BigBlueButtonApiController < ApplicationController
         logger.debug("Deleting recording: #{rec.record_id}")
         # TODO: check the unpublished dir when it is implemented
         FileUtils.rm_r(Dir.glob(File.join(Rails.configuration.x.recording_publish_dir, '/*/', rec.record_id)))
-        rec.destroy!
+        destroy!(hard: false)
       rescue StandardError => e
         logger.warn("Error #{e} deleting recording #{rec.record_id}")
         raise InternalError, 'Unable to delete recording.'
