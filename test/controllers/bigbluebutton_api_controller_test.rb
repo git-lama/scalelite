@@ -1415,6 +1415,7 @@ class BigBlueButtonApiControllerTest < ActionDispatch::IntegrationTest
       reload_routes!
       get bigbluebutton_api_get_meetings_url
     end
+    
     assert_response :success
     assert_select 'response>returncode', 'SUCCESS'
     assert_select 'response>messageKey', 'noMeetings'
