@@ -1,3 +1,14 @@
+location ~  /\.(?!well-known).* {
+  deny all;
+  access_log off;
+  log_not_found off;
+  return 404;
+}
+
+location /health_check {
+  proxy_pass http://scalelite-api:3000;
+}
+
 location / {
   proxy_pass http://scalelite-api:3000;
 
@@ -15,5 +26,10 @@ location / {
   proxy_http_version 1.1;
 }
 
-# BigBlueButton recording playback
-include /etc/bigbluebutton/nginx/*.nginx;
+location /static-resource/ {
+  include /etc/bigbluebutton/nginx/*.nginx;
+}
+
+location /playback {
+  include /etc/bigbluebutton/nginx/*.nginx;
+}
