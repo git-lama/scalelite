@@ -40,6 +40,11 @@ Rails.application.routes.draw do
         format: false,
         defaults: { playback_format: playback_format }
       )
+      get(
+        "playback/#{playback_format}/:playback_version/:record_id(/*resource)",
+        to: 'playback#resource',
+        format: false
+      )
     end
   end
 
