@@ -32,7 +32,10 @@ Rails.application.routes.draw do
   get('health_check', to: 'health_check#index')
 
   unless Rails.configuration.x.recording_disabled
-    get('recording/:record_id/:playback_format', to: 'playback#play', format: false, as: :playback_play)
+    match('recording/:record_id/:playback_format', to: 'playback#play',
+                                                   format: false,
+                                                   via: :all,
+                                                   as: :playback_play)
     get('playback/:playback_format/:playback_version/:record_id', to: 'playback#resource',
                                                                   format: false,
                                                                   as: :playback_resource)
