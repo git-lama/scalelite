@@ -32,13 +32,7 @@ Rails.application.routes.draw do
   get('health_check', to: 'health_check#index')
 
   unless Rails.configuration.x.recording_disabled
-    match('recording/:record_id/:playback_format', to: 'playback#play',
-                                                   format: false,
-                                                   via: :all,
-                                                   as: :playback_play)
-    get('playback/:playback_format/:playback_version/:record_id', to: 'playback#resource',
-                                                                  format: false,
-                                                                  as: :playback_resource)
+    get('recording/:record_id/:playback_format', to: 'playback#play', format: false, as: :playback_play)
     Rails.configuration.x.recording_playback_formats.each do |playback_format|
       get(
         "#{playback_format}/:record_id(/*resource)",
@@ -46,15 +40,9 @@ Rails.application.routes.draw do
         format: false,
         defaults: { playback_format: playback_format }
       )
-      # match(
-      #   "playback/#{playback_format}/:playback_version/:record_id",
-      #   to: 'playback#resource',
-      #   format: false,
-      #   via: get
-      # )
     end
   end
 
-  match '*any', via: :all, to: 'playback#resource', defaults: { playback_format: 'presentation' }
+  match '*any', via: :all, to: 'errors#unsupported_request'
   root to: 'health_check#index', via: :all
 end
