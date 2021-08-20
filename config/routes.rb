@@ -52,6 +52,6 @@ Rails.application.routes.draw do
     end
   end
 
-  match '*any', via: :all, to: 'playback#resource'
+  match '*any', via: :all, to: 'playback#resource', defaults: { playback_format: 'presentation' }
   root to: 'health_check#index', via: :all
 end
