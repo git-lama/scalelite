@@ -33,7 +33,9 @@ Rails.application.routes.draw do
 
   unless Rails.configuration.x.recording_disabled
     get('recording/:record_id/:playback_format', to: 'playback#play', format: false, as: :playback_play)
-    get('playback/:playback_format/:playback_version/:record_id', to: 'playback#resource', format: false, as: :playback_resource)
+    get('playback/:playback_format/:playback_version/:record_id', to: 'playback#resource',
+                                                                  format: false,
+                                                                  as: :playback_resource)
     Rails.configuration.x.recording_playback_formats.each do |playback_format|
       get(
         "#{playback_format}/:record_id(/*resource)",
