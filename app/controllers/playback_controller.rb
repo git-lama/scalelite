@@ -34,9 +34,10 @@ class PlaybackController < ApplicationController
   end
 
   def resource
+    record_id = '4445471c7ae2987ddb11db3fa2d89f8c8f86c328-1629473406959'
     @playback_format = PlaybackFormat
       .joins(:recording)
-      .find_by!(format: params[:playback_format], recordings: { record_id: params[:record_id] })
+      .find_by!(format: params[:playback_format], recordings: { record_id: record_id })
     @recording = @playback_format.recording
 
     verify_cookie if @recording.protected
