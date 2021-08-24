@@ -41,7 +41,7 @@ class PlaybackController < ApplicationController
 
     verify_cookie if @recording.protected
 
-    deliver_resource
+    # deliver_resource
   end
 
   private
