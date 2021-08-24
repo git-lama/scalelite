@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   get('health_check', to: 'health_check#index')
-
+  get('playback/:playback_format/2.3/:record_id', to: 'playback#resource', format: false)
   unless Rails.configuration.x.recording_disabled
     get('recording/:record_id/:playback_format', to: 'playback#play', format: false, as: :playback_play)
     Rails.configuration.x.recording_playback_formats.each do |playback_format|
