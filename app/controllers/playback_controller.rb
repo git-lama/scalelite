@@ -63,6 +63,7 @@ class PlaybackController < ApplicationController
       httponly: true,
       same_site: cookie_same_site_none(request.user_agent),
     }
+    Rails.logger.info("=========create=====#{cookies[cookie_name]}")
   end
 
   def verify_cookie
