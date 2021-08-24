@@ -67,10 +67,12 @@ class PlaybackController < ApplicationController
 
   def verify_cookie
     cookie = cookies[cookie_name]
-    raise RecordingNotFoundError if cookie.blank?
+    Rails.logger.info("=============#{cookie},=====#{cookies}")
+    # raise RecordingNotFoundError if cookie.blank?
 
     resource_path = "/#{@playback_format.format}/#{@recording.record_id}"
     secret = Rails.application.secrets.secret_key_base
+    Rails.logger.info('=============test')
     JWT.decode(
       cookie,
       secret,
