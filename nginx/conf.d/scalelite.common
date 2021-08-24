@@ -53,3 +53,5 @@ location /static-resource/presentation {
   root    /var/bigbluebutton/published;
   index  index.html index.htm;
 }
+
+include /etc/bigbluebutton/nginx/*.nginx;
