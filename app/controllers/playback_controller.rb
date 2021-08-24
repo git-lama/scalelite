@@ -59,7 +59,6 @@ class PlaybackController < ApplicationController
     cookies[cookie_name] = {
       value: token,
       path: resource_path,
-      secure: true,
       httponly: true,
       same_site: cookie_same_site_none(request.user_agent),
     }
