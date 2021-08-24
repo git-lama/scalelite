@@ -27,8 +27,7 @@ location / {
 }
 
 location /static-resource/playback/presentation/2.3/ {
-  alias /var/bigbluebutton;
-  try_files $uri /var/bigbluebutton/playback/presentation/2.3/index.html;
+  return 301 /var/bigbluebutton/playback/presentation/2.3/index.html;
 }
 
 location /static-resource/playback/presentation/playback.html {
@@ -45,11 +44,11 @@ location /static-resource/playback/presentation/2.0/playback.html {
 }
 
 location /static-resource/playback/presentation {
-  alias    /var/bigbluebutton;
+  root    /var/bigbluebutton;
   index  index.html index.htm;
 }
 
 location /static-resource/presentation {
-  alias    /var/bigbluebutton/published;
+  root    /var/bigbluebutton/published;
   index  index.html index.htm;
 }
