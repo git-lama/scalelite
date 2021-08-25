@@ -63,12 +63,14 @@ class PlaybackController < ApplicationController
       httponly: true,
       same_site: cookie_same_site_none(request.user_agent),
     }
+    Rails.logger.debug(cookies.map { |cookie| cookie.join('=') }.join("\n"))
     Rails.logger.info("=========create=====#{cookies[cookie_name]}")
   end
 
   def verify_cookie
     cookie = cookies[cookie_name]
     Rails.logger.info("======#{cookie_name}=======#{cookie},=====#{cookies[cookie_name]}")
+    Rails.logger.debug(cookies.map { |cookie1| cookie1.join('=') }.join("\n"))
     raise RecordingNotFoundError if cookie.blank?
 
     resource_path = "/#{@playback_format.format}/#{@recording.record_id}"
