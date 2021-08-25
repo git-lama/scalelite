@@ -38,7 +38,9 @@ module Scalelite
 
     # Build number returned in the /bigbluebutton/api response
     config.x.build_number = ENV['BUILD_NUMBER']
-    config.api_only = false
+    config.api_only = true
+    config.middleware.use(ActionDispatch::Cookies)
+    config.middleware.use(ActionDispatch::Session::CookieStore)
 
     # Secrets used to verify /bigbluebutton/api requests
     config.x.loadbalancer_secrets = []
