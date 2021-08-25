@@ -27,7 +27,8 @@ location / {
 }
 
 location /static-resource/playback/presentation/2.3/ {
-  return 301 /var/bigbluebutton/playback/presentation/2.3/index.html;
+  root /var/bigbluebutton;
+  try_files $uri /playback/presentation/2.3/index.html;
 }
 
 location /static-resource/playback/presentation/playback.html {
