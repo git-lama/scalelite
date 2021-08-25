@@ -63,6 +63,8 @@ class PlaybackController < ApplicationController
       httponly: true,
       same_site: cookie_same_site_none(request.user_agent),
     }
+    Rails.logger.info("=========same_site=====#{cookie_same_site_none(request.user_agent)}")
+    Rails.logger.info("=========same_site=====#{request.user_agent}========path#{resource_path}")
     Rails.logger.debug(cookies.map { |cookie| cookie.join('=') }.join("\n"))
     Rails.logger.info("=========create=====#{cookies[cookie_name]}")
   end
