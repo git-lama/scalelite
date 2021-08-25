@@ -39,7 +39,7 @@ class PlaybackController < ApplicationController
       .find_by!(format: params[:playback_format], recordings: { record_id: params[:record_id] })
     @recording = @playback_format.recording
 
-    # verify_cookie if @recording.protected
+    verify_cookie if @recording.protected
 
     deliver_resource
   end
@@ -68,7 +68,7 @@ class PlaybackController < ApplicationController
   def verify_cookie
     cookie = cookies[cookie_name]
     Rails.logger.info("=============#{cookie},=====#{cookies}")
-    # raise RecordingNotFoundError if cookie.blank?
+    raise RecordingNotFoundError if cookie.blank?
 
     resource_path = "/#{@playback_format.format}/#{@recording.record_id}"
     secret = Rails.application.secrets.secret_key_base
