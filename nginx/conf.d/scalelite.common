@@ -28,7 +28,7 @@ location / {
 
 location /static-resource/playback/presentation/2.3 {
   root /var/bigbluebutton;
-  try_files /playback/presentation/2.3/index.html;
+  try_files $uri $uri/ playback/presentation/2.3/index.html;
 }
 
 location /static-resource/playback/presentation/playback.html {
