@@ -26,8 +26,7 @@ location / {
   proxy_http_version 1.1;
 }
 
-location /static-resource/playback/presentation/2.3 {
-  rewrite ^/static-resource(.*)$ $1 permanent;
+location /playback/presentation/2.3 {
   root /var/bigbluebutton;
   try_files $uri /playback/presentation/2.3/index.html;
 }
