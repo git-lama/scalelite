@@ -45,11 +45,11 @@ location /static-resource/playback/presentation/2.0/playback.html {
 }
 
 location /static-resource/playback/presentation {
-  alias    /var/bigbluebutton;
+  alias    /var/bigbluebutton/presentation;
   index  index.html index.htm;
 }
 
 location /static-resource/presentation {
-  alias    /var/bigbluebutton/published;
+  alias    /var/bigbluebutton/published/presentation;
   index  index.html index.htm;
 }
