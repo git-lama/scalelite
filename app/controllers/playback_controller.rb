@@ -59,6 +59,7 @@ class PlaybackController < ApplicationController
     cookies[cookie_name] = {
       value: token,
       path: resource_path,
+      secure: true,
       httponly: true,
       same_site: cookie_same_site_none(request.user_agent),
     }
@@ -67,7 +68,7 @@ class PlaybackController < ApplicationController
 
   def verify_cookie
     cookie = cookies[cookie_name]
-    Rails.logger.info("=============#{cookie},=====#{cookies}")
+    Rails.logger.info("======#{cookie_name}=======#{cookie},=====#{cookies[cookie_name]}")
     raise RecordingNotFoundError if cookie.blank?
 
     resource_path = "/#{@playback_format.format}/#{@recording.record_id}"
