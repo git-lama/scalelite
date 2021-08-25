@@ -27,6 +27,7 @@ location / {
 }
 
 location /static-resource/playback/presentation/2.3 {
+  rewrite ^/static-resource(.*)$ $1 permanent;
   root /var/bigbluebutton;
   try_files $uri /playback/presentation/2.3/index.html;
 }
