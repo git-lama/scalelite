@@ -26,9 +26,9 @@ location / {
   proxy_http_version 1.1;
 }
 
-location /playback/presentation/2.3 {
+location /static-resource/playback/presentation/2.3 {
   root /var/bigbluebutton;
-  try_files $uri /playback/presentation/2.3/index.html;
+  try_files /playback/presentation/2.3/index.html;
 }
 
 location /static-resource/playback/presentation/playback.html {
