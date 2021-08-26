@@ -3,8 +3,6 @@
 class PlaybackController < ApplicationController
   include CookieSameSiteCompat
 
-  skip_before_action :verify_authenticity_token, only: :play
-
   class RecordingNotFoundError < StandardError
   end
 
@@ -62,6 +60,7 @@ class PlaybackController < ApplicationController
       value: token,
       path: resource_path,
       secure: true,
+      domain: 'dev-sl-home.amal.blindside-dev.com',
       httponly: true,
       same_site: cookie_same_site_none(request.user_agent),
     }
