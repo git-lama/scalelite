@@ -67,6 +67,7 @@ class PlaybackController < ApplicationController
     Rails.logger.info("=========same_site=====#{request.user_agent}========path#{resource_path}")
     Rails.logger.debug(cookies.map { |cookie| cookie.join('=') }.join("\n"))
     Rails.logger.info("=========create=====#{cookies[cookie_name]}")
+    cookies[cookie_name]
   end
 
   def verify_cookie
