@@ -3,6 +3,8 @@
 class PlaybackController < ApplicationController
   include CookieSameSiteCompat
 
+  skip_before_action :verify_authenticity_token, only: :play
+
   class RecordingNotFoundError < StandardError
   end
 
