@@ -5,8 +5,7 @@ class BigBlueButtonApiController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
-  before_action :verify_checksum, except: [:index, :get_recordings_disabled, :recordings_disabled, :get_meetings_disabled,
-                                           :analytics_callback,]
+  before_action :verify_checksum, except: [:index, :analytics_callback]
 
   def index
     # Return the scalelite build number if passed as an env variable
