@@ -184,7 +184,7 @@ namespace :servers do
   desc('List all meetings running in specific BigBlueButton servers')
   task :meeting_list, [:server_ids] => :environment do |_t, args|
     args.with_defaults(server_ids: '')
-    server_ids = args.server_ids.split(' ')
+    server_ids = args.server_ids.split(':')
     servers = Server.all
     servers = servers.select { |server| server_ids.include?(server.id) } if server_ids.present?
     meetings = Meeting.all

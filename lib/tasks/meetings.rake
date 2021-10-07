@@ -6,7 +6,7 @@ namespace :meetings do
   desc('List all/specific meetings running in BigBlueButton servers')
   task :list, [:meeting_ids] => :environment do |_t, args|
     args.with_defaults(meeting_ids: '')
-    meeting_ids = args.meeting_ids.split(' ')
+    meeting_ids = args.meeting_ids.split(':')
 
     meetings = if meeting_ids.present?
                  meeting_ids.map { |id| Meeting.find(id) }
@@ -32,7 +32,7 @@ namespace :meetings do
       args.with_defaults(meeting_ids: '')
       include ApiHelper
 
-      meeting_ids = args.meeting_ids.split(' ')
+      meeting_ids = args.meeting_ids.split(':')
       meetings = if meeting_ids.present?
                    meeting_ids.map { |id| Meeting.find(id) }
                  else

@@ -335,7 +335,7 @@ You can run the above task to have it poll the server right away without waiting
 To list meetings in a specific servers, the following command can be used
 
 ```sh
-./bin/rake servers:meeting_list["serverID1 serverID2 serverID3"]
+./bin/rake servers:meeting_list["serverID1:serverID2:serverID3"]
 ```
 To list all meetings running across all BigBlueButton servers, use:
 
@@ -459,7 +459,7 @@ This will print a table displaying a list of all servers and some basic statisti
 To list specific meetings, use:
 
 ```sh
-./bin/rake meetings:list["meetingId1 meetingId2 meetingId3"]
+./bin/rake meetings:list["meetingId1:meetingId2:meetingId3"]
 ```
 
 To list all meetings running across all BigBlueButton servers, use:
@@ -473,7 +473,7 @@ To list all meetings running across all BigBlueButton servers, use:
 To End specific meetings, use:
 
 ```sh
-./bin/rake meetings:end["meetingId1 meetingId2 meetingId3"]
+./bin/rake meetings:end["meetingId1:meetingId2:meetingId3"]
 ```
 
 To End all meetings running across all BigBlueButton servers, use:
