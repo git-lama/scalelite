@@ -273,6 +273,14 @@ class BigBlueButtonApiController < ApplicationController
     end
 
     query = Recording.includes(playback_formats: [:thumbnails], metadata: []).references(:metadata)
+
+    query = if Rails.configuration.x.pagination_enabled
+              page = params[:page]&.to_i || 0
+              limit = params[:limit]&.to_i || Rails.configuration.x.pagination_limit
+              offset = page * limit
+              query.offset(offset).limit(limit)
+            end
+
     query = if params[:state].present?
               states = params[:state].split(',')
               states.include?('any') ? query : query.where(state: states)
