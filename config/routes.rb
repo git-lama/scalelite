@@ -29,6 +29,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api, defaults: { format: 'xml' } do
+    namespace :v1 do
+      match 'servers', to: 'servers#index', via: [:get, :post]
+    end
+  end
+
   get('health_check', to: 'health_check#index')
 
   unless Rails.configuration.x.recording_disabled
