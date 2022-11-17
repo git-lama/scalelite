@@ -49,6 +49,6 @@ Rails.application.routes.draw do
     end
   end
 
-  match '*any', via: :all, to: 'errors#unsupported_request'
-  root to: 'health_check#index', via: :all
+  # match '*any', via: :all, to: 'errors#unsupported_request'
+  # root to: 'health_check#index', via: :all
 end

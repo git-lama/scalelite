@@ -5,7 +5,7 @@ module Api
     class ServersController < ApplicationController
       include ApiHelper
 
-      before_action :verify_checksum
+      # before_action :verify_checksum
 
       def index
         respond_to do |format|
